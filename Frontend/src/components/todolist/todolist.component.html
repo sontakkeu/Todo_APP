@@ -1,0 +1,89 @@
+<div class="container mt-4">
+  <h1 class="text-center text-primary">Todo App</h1>
+  
+  <div class="card p-4 shadow-lg">
+    <h2 class="text-success">Add New Task</h2>
+    <form (ngSubmit)="addtodo(id, title, status, $event)">
+      <div class="mb-3">
+        <label class="form-label fw-bold">Enter Title</label>
+        <input type="text" class="form-control" name="newtitle" [(ngModel)]="title" required>
+      </div>
+      
+      <div class="mb-3">
+        <label class="form-label fw-bold">Select Status</label>
+        <select class="form-select" name="status" [(ngModel)]="status" required>
+          <option value="Completed">Completed</option>
+          <option value="InCompleted">InCompleted</option>
+        </select>
+      </div>
+      
+      <button type="submit" class="btn btn-warning text-light fw-bold w-100">Add Task</button>
+    </form>
+  </div>
+  
+  <div class="mt-5">
+    <h2 class="text-danger"> Task List</h2>
+    <table class="table table-bordered text-center shadow-lg">
+      <thead class="bg-success text-light">
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let todo of todolist" class="bg-light">
+          <td>{{ todo.id }}</td>
+          <td>{{ todo.title }}</td>
+          <td>
+            <span [class.text-success]="todo.status === 'Completed'" [class.text-danger]="todo.status === 'InCompleted'">
+              {{ todo.status }}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-danger btn-sm me-2" (click)="deletetask(todo.id)">
+              <i class="fas fa-trash-alt"></i> Delete
+            </button>
+            <button class="btn btn-primary btn-sm" (click)="editTask(todo)">
+              <i class="fas fa-edit"></i> Update
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Update Task Form -->
+  <div *ngIf="showUpdateForm" class="card p-4 shadow-lg mt-4">
+    <h2 class="text-warning">Update Task</h2>
+    <form (ngSubmit)="updateTask()">
+      <div class="mb-3">
+        <label class="form-label fw-bold">Enter ID</label>
+        <input type="number" class="form-control" name="id" [(ngModel)]="id" disabled>
+      </div>
+      
+      <div class="mb-3">
+        <label class="form-label fw-bold">Enter Title</label>
+        <input type="text" class="form-control" name="title" [(ngModel)]="title" required>
+      </div>
+      
+      <div class="mb-3">
+        <label class="form-label fw-bold">Select Status</label>
+        <select class="form-select" name="status" [(ngModel)]="status" required>
+          <option value="Completed">Completed</option>
+          <option value="InCompleted">InCompleted</option>
+        </select>
+      </div>
+      
+      <div class="d-flex justify-content-between">
+        <button type="submit" class="btn btn-success">
+          <i class="fas fa-save"></i> Update Task
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="cancelUpdate()">
+          <i class="fas fa-times"></i> Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
